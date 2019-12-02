@@ -13,6 +13,7 @@ public class Aoc1 {
             countMass(Integer.valueOf(buf), false);
             countMass(Integer.valueOf(buf), true);
         }
+        br.close();
         System.out.println(sum1);
         System.out.println(sum2);
     }
