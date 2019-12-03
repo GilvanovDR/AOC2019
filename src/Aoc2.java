@@ -9,18 +9,31 @@ public class Aoc2 {
         String[] srcString = br.readLine().split(",");
         br.close();
         int[] srcInt = Arrays.stream(srcString).mapToInt(Integer::parseInt).toArray();
-        srcInt[1] = 12;
-        srcInt[2] = 2;
-        for (int i = 0; i < (srcInt.length / 4 + 1); i++) {
-            if (srcInt[i * 4] == 99) {
-                break;
-            }
-            if (srcInt[i * 4] == 1) {
-                srcInt[srcInt[i * 4 + 3]] = srcInt[srcInt[i * 4 + 1]] + srcInt[srcInt[i * 4 + 2]];
-            } else {
-                srcInt[srcInt[i * 4 + 3]] = srcInt[srcInt[i * 4 + 1]] * srcInt[srcInt[i * 4 + 2]];
+        System.out.println(getFirstItem(12,2,srcInt));
+        for (int i = 0; i <121 ; i++) {
+            for (int j = 0; j <121 ; j++) {
+                if (19690720 == getFirstItem(i, j, srcInt)) {
+                    System.out.println(i*100+j);
+                    break;
+                }
             }
         }
-        System.out.println(srcInt[0]);
+    }
+
+    private static int getFirstItem(int first, int second, int[] srcInt) {
+        int[] arr = Arrays.copyOf(srcInt,srcInt.length);
+        arr[1] = first;
+        arr[2] = second;
+        for (int i = 0; i < (arr.length / 4 + 1); i++) {
+            if (arr[i * 4] == 99) {
+                break;
+            }
+            if (arr[i * 4] == 1) {
+                arr[arr[i * 4 + 3]] = arr[arr[i * 4 + 1]] + arr[arr[i * 4 + 2]];
+            } else {
+                arr[arr[i * 4 + 3]] = arr[arr[i * 4 + 1]] * arr[arr[i * 4 + 2]];
+            }
+        }
+        return arr[0];
     }
 }
