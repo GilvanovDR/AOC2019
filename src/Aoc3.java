@@ -1,7 +1,8 @@
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Aoc3 {
     public static void main(String[] args) throws IOException {
@@ -9,7 +10,7 @@ public class Aoc3 {
         String[] srcString1 = br.readLine().split(",");
         String[] srcString2 = br.readLine().split(",");
         br.close();
-        System.out.println(Arrays.toString(getSizeMap(srcString1,srcString2)));
+        Map map = new HashMap<String, Integer>();
     }
 
     private static int[] getSizeMap(String[] srcString1, String[] srcString2) {
