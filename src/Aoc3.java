@@ -1,8 +1,8 @@
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Aoc3 {
     public static void main(String[] args) throws IOException {
@@ -10,30 +10,32 @@ public class Aoc3 {
         String[] srcString1 = br.readLine().split(",");
         String[] srcString2 = br.readLine().split(",");
         br.close();
-        Map map = new HashMap<String, Integer>();
+        List<int[]> sections1 = getSections(srcString1);
+      /*  for (int[] ints : sections1) {
+            for (int i : ints) {
+                System.out.print(i + " ");
+            }
+            System.out.println();
+        }*/
+        List<int[]> sections2 = getSections(srcString2);
+        System.out.println(getMinManhettn(sections1, sections2));
     }
 
-    private static int[] getSizeMap(String[] srcString1, String[] srcString2) {
-        int[] size1 = getSizeFromArray(srcString1);
-        int[] size2 = getSizeFromArray(srcString2);
-        int[] result = new int[4];
-        result[0] = size1[0] < size2[0] ? size1[0] : size2[0];
-        result[1] = size1[1] > size2[1] ? size1[1] : size2[1];
-        result[2] = size1[2] > size2[2] ? size1[2] : size2[2];
-        result[3] = size1[3] < size2[3] ? size1[3] : size2[3];
-        return result;
+    private static int getMinManhettn(List<int[]> sections1, List<int[]> sections2) {
+        return 0;
     }
 
-    private static int[] getSizeFromArray(String[] srcString) {
+    private static List<int[]> getSections(String[] srcString) {
         char direct;
         int countSteps;
-        int lowX = 0;
-        int lowY = 0;
-        int hiX = 0;
-        int hiY = 0;
         int slideX = 0;
         int slideY = 0;
+        int startX;
+        int startY;
+        List<int[]> section = new ArrayList<>();
         for (String aSrcString : srcString) {
+            startX = slideX;
+            startY = slideY;
             direct = aSrcString.charAt(0);
             countSteps = Integer.valueOf(aSrcString.substring(1));
             switch (direct) {
@@ -50,11 +52,8 @@ public class Aoc3 {
                     slideX -= countSteps;
                     break;
             }
-            lowX = lowX < slideX ? lowX : slideX;
-            lowY = lowY < slideY ? lowY : slideY;
-            hiX = hiX > slideX ? hiX : slideX;
-            hiY = hiY > slideY ? hiY : slideY;
+            section.add(new int[]{startX, startY, slideX, slideY});
         }
-        return new int[]{lowX, hiY, hiX, lowY};
+        return section;
     }
 }
