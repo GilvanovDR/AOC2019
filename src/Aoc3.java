@@ -2,7 +2,6 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import static java.lang.Math.abs;
@@ -14,27 +13,18 @@ public class Aoc3 {
         String[] srcString2 = br.readLine().split(",");
         br.close();
         List<int[]> sections1 = getSections(srcString1);
-/*        for (int[] ints : sections1) {
-            for (int i : ints) {
-                System.out.print(i + " ");
-            }
-            System.out.println();
-        }*/
         List<int[]> sections2 = getSections(srcString2);
-        System.out.println(getMinManhettn(sections1, sections2));
+        System.out.println(getMinManhattan(sections1, sections2));
     }
 
-    private static int getMinManhettn(List<int[]> sections1, List<int[]> sections2) {
+    private static int getMinManhattan(List<int[]> sections1, List<int[]> sections2) {
         int minValue = Integer.MAX_VALUE;
         int value;
         for (int[] section1 : sections1) {
             for (int[] section2 : sections2) {
                 int[] cross = getCross(section1, section2);
                 if (cross != null) {
-                    System.out.println(Arrays.toString(section1) + " "
-                            + Arrays.toString(section2) + " [" + cross[0] + ","
-                            + cross[1] + "]");
-                    if (cross[0] != 0 && cross[1] != 0) {
+                    if (cross[0] != 0 || cross[1] != 0) {
                         value = abs(cross[0]) + abs(cross[1]);
                         minValue = minValue < value ? minValue : value;
                     }
@@ -48,16 +38,17 @@ public class Aoc3 {
         int crossX = 0;
         int crossY = 0;
         boolean flag = false;
-        //todo проверить условия пересечения (их 2 по вертикали и горизонтали (провереннот тока по гори)
         if (section1[4] != section2[4]) {
             if (section1[4] == 0) {
-                if ((section1[1] > section2[1]) && (section1[1] < section2[3])) {
+                if ((section1[1] >= section2[1]) && (section1[1] <= section2[3])
+                        && (section2[0] >= section1[0]) && (section2[0] <= section2[2])) {
                     crossX = section1[1];
                     crossY = section2[0];
                     flag = true;
                 }
             } else {
-                if ((section1[0] > section2[0]) && (section1[0] < section2[2])) {
+                if ((section1[0] >= section2[0]) && (section1[0] <= section2[2])
+                        && section2[1] >= section1[1] && section2[1] <= section1[3]) {
                     crossX = section1[0];
                     crossY = section2[1];
                     flag = true;
